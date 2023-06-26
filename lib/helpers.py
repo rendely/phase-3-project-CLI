@@ -7,6 +7,6 @@ engine = create_engine('sqlite:///db/trippy.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-def add_user(name):
+def add_user_to_db(name):
     session.add(User(name=name))
     session.commit()
