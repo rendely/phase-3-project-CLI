@@ -52,3 +52,8 @@ Trips Table: This table stores information about the trips a user has planned or
 - month
 - year
 - status ('planned' or 'completed')
+
+## Useful commandline arguments for development
+
+`alembic revision --autogenerate -m '<comment here>'`
+`alembic upgrade head`
