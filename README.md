@@ -2,7 +2,13 @@
 
 ## Overview
 
-A CLI to help users keep track of places they have visited or want to vist.
+A CLI to help users keep track of places they have visited or want to visit. These are the project requirements:
+
+- A CLI application that solves a real-world problem and adheres to best practices.
+- A database created and modified with SQLAlchemy ORM with 3+ related tables.
+- A well-maintained virtual environment using Pipenv.
+- Proper package structure in your application.
+- Use of lists, dicts, and tuples.
 
 ## Command line options
 
