@@ -1,0 +1,24 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Dependency directories
+venv/
+env/
+env3/
