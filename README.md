@@ -16,8 +16,8 @@ These are the actions a user should be able to accomplish:
 
 Action | Command
 ---|---
-Create a user | `trippy add user`
-Get all users | `trippy show users`
+Create a user | `trippy user add {name}`
+Get all users | `trippy user get-all`
 Create a location | `trippy add location`
 Update a location | `trippy update location`
 Get all locations | `trippy show locations`
@@ -55,5 +55,15 @@ Trips Table: This table stores information about the trips a user has planned or
 
 ## Useful commandline arguments for development
 
-`alembic revision --autogenerate -m '<comment here>'`
-`alembic upgrade head`
+
+```shell
+alembic revision --autogenerate -m '<comment here>'
+```
+
+```shell
+alembic upgrade head
+```
+
+```shell
+alias trippy='python cli.py'
+```
