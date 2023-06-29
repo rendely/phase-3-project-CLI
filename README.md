@@ -65,5 +65,5 @@ alembic upgrade head
 ```
 
 ```shell
-alias trippy='python cli.py'
+alias trippy='python ~/Flatiron/code/phase-3/phase-3-project-CLI/lib/cli.py'
 ```

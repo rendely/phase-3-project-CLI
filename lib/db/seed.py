@@ -5,7 +5,7 @@ import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import User
+from models import User, Location
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///trippy.db')
@@ -21,5 +21,10 @@ if __name__ == '__main__':
     
     session.add_all(users)
 
+    locations = []
+    for i in range(0,10):
+      locations.append(Location(city=fake.city(), country=fake.country()))
+
+    session.add_all(locations)
     session.commit()
     session.close()

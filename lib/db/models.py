@@ -18,3 +18,13 @@ class User(Base):
 
     def __repr__(self):
         return f'User(id={self.id}, name={self.name})'
+
+class Location(Base):
+    __tablename__ = 'locations'
+
+    id = Column(Integer(), primary_key=True)
+    country = Column(String())
+    city = Column(String())
+
+    def __repr__(self):
+        return f'Location(id={self.id}, city={self.city}, country={self.country})'        
