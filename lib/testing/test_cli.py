@@ -27,7 +27,7 @@ class TestUser:
         runner = CliRunner()
         result = runner.invoke(cli, ['user', 'add', '--name', 'TestName'])
         assert result.exit_code == 0
-        assert 'Created new user TestName' in result.output
+        assert "Added record to users: {'name': 'TestName'}" in result.output
 
     def test_cli_user_update(self):
         '''cli user update'''
@@ -42,3 +42,26 @@ class TestUser:
         result = runner.invoke(cli, ['user', 'get-all'])
         assert result.exit_code == 0
         assert 'User(id=' in result.output
+
+class TestLocation:
+    '''[CLI location commmands]'''
+    def test_cli_location(self):
+        '''cli location'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['location'])
+        assert result.exit_code == 0
+        assert 'Usage: cli location [OPTIONS]' in result.output
+
+    def test_cli_location_add(self):
+        '''cli location add'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['location', 'add', '--city=TestCity', '--country=TestCountry'])
+        assert result.exit_code == 0
+        assert "Added record to locations: {'city': 'TestCity', 'country': 'TestCountry'}\n" in result.output
+
+    def test_cli_user_get_all(self):
+        '''cli location get-all'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['location', 'get-all'])
+        assert result.exit_code == 0
+        assert 'Location(id=' in result.output
