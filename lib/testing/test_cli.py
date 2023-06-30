@@ -7,7 +7,7 @@ from cli import cli
 class TestBasic:
     '''[CLI basics]'''
     def test_cli(self):
-        '''Does the CLI run when called'''
+        '''cli'''
         runner = CliRunner()
         result = runner.invoke(cli)
         assert result.exit_code == 0
@@ -16,8 +16,22 @@ class TestBasic:
 class TestUser:
     '''[CLI user commands]'''
     def test_cli_user(self):
-        '''Does the CLI user command work'''
+        '''cli user'''
         runner = CliRunner()
         result = runner.invoke(cli, ['user'])
         assert result.exit_code == 0
         assert 'Usage: cli user [OPTIONS]' in result.output
+
+    def test_cli_user_add(self):
+        '''cli user add'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['user', 'add', '--name', 'TestName'])
+        assert result.exit_code == 0
+        assert 'Created new user TestName' in result.output
+    
+    def test_cli_user_get_all(self):
+        '''cli user get-all'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['user', 'get-all'])
+        assert result.exit_code == 0
+        assert 'User(id=' in result.output
