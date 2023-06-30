@@ -16,10 +16,12 @@ These are the actions a user should be able to accomplish:
 
 Action | Command
 ---|---
-Create a user | `trippy user add {name}`
+Create a user | `trippy user add --name={name}`
+Update a user | `trippy user update --id={id} --name={name}`
 Get all users | `trippy user get-all`
-Create a location | `trippy add location`
-Update a location | `trippy update location`
+Create a location | `trippy location add --city={city} --country={country}`
+Get all locations | `trippy location get-all`
+Update a location | `trippy location update {id} {city} {country}`
 Get all locations | `trippy show locations`
 Create a trip | `trippy add trip`
 Update a trip | `trippy update trip`
@@ -54,7 +56,6 @@ Trips Table: This table stores information about the trips a user has planned or
 - status ('planned' or 'completed')
 
 ## Useful commandline arguments for development
-
 
 ```shell
 alembic revision --autogenerate -m '<comment here>'

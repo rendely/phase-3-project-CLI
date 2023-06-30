@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from helpers import add_user_to_db, get_all_users_from_db, delete_all_users_from_db
+from helpers import add_user_to_db, update_user_in_db, get_all_users_from_db, delete_all_users_from_db
 from helpers import add_location_to_db, get_all_locations_from_db
 import click
 
@@ -18,17 +18,22 @@ def user_group():
     pass 
 
 @click.command(name='add')
-@click.argument('name', type=str)
+@click.option('--name', prompt='User\'s name',type=str)
 def add_user(name):
     '''Creates a new user with {name}'''
     add_user_to_db(name)
-    click.echo(f"Created new user {name}...")
+
+@click.command(name='update')
+@click.option('--id', prompt='User\'s id', type=str)
+@click.option('--name', prompt='Updated name', type=str)
+def update_user(id, name):
+    '''Updates the user's name with name`'''
+    update_user_in_db(id, name)
 
 @click.command(name='get-all')
 def get_all_users():
     '''Gets all users'''
-    users = get_all_users_from_db()
-    [print(u) for u in users]
+    get_all_users_from_db()
 
 @click.command(name='delete-all')
 def delete_all_users():
@@ -36,11 +41,13 @@ def delete_all_users():
     ans = input('Are you sure? (Y/N)')
     if ans == 'Y':
         delete_all_users_from_db()
-        print('Deleted all users')
+        
 
-user_group.add_command(get_all_users)
 user_group.add_command(add_user)        
+user_group.add_command(update_user)
+user_group.add_command(get_all_users)
 user_group.add_command(delete_all_users)
+
 
 """location command group
    all commands applied to the Location class
@@ -51,18 +58,16 @@ def location_group():
     pass 
 
 @click.command(name='add')
-@click.argument('city', type=str, nargs=1)
-@click.argument('country', type=str, nargs=1)
+@click.option('--city', prompt='City', type=str)
+@click.option('--country', prompt='Country',type=str)
 def add_location(city, country):
     '''Creates a new location with {city} and {country}'''
     add_location_to_db(city, country)
-    click.echo(f"Created new location {city}, {country}...")
 
 @click.command(name='get-all')
 def get_all_locations():
     '''Gets all locations'''
-    locations = get_all_locations_from_db()
-    [print(l) for l in locations]
+    get_all_locations_from_db()
 
 location_group.add_command(add_location)
 location_group.add_command(get_all_locations)            
