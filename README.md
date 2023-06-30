@@ -21,13 +21,17 @@ Update a user | `trippy user update --id={id} --name={name}`
 Get all users | `trippy user get-all`
 Create a location | `trippy location add --city={city} --country={country}`
 Get all locations | `trippy location get-all`
-Update a location | `trippy location update {id} {city} {country}`
-Get all locations | `trippy show locations`
-Create a trip | `trippy add trip`
-Update a trip | `trippy update trip`
-Get all trips | `trippy show trips`
-Get completed trips | `trippy show trips --status=completed`
-Get planned trips | `trippy show trips --status=planned`
+Update a location | `trippy location update --id={id} --city={city} --country={country}`
+Get all locations | `trippy locations get-all`
+Create a trip | `trippy trip add --name={name} --year={year} --status={status}`
+Update a trip | TODO
+Get all trips | TODO
+Add location to trip | TODO
+Remove location from trip | TODO
+Add user to trip | TODO
+Remove user from trip | TODO
+Get completed trips | TODO
+Get planned trips | TODO
 
 ## Database structure
 
