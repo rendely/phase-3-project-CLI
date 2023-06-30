@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker
 
 from models import User, Location
 
-if __name__ == '__main__':
+def run_seed():
+
     engine = create_engine('sqlite:///trippy.db')
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -28,3 +29,6 @@ if __name__ == '__main__':
     session.add_all(locations)
     session.commit()
     session.close()
+
+if __name__ == '__main__':
+    run_seed()

@@ -18,7 +18,7 @@ def get_all_users_from_db():
 def update_user_in_db(id, new_name):
     session.query(User).filter(User.id==id).update({User.name: new_name})
     session.commit()
-    print(f"Updated User.id={id} to new name: {name}")
+    print(f"Updated User.id={id} to new name: {new_name}")
 
 def delete_all_users_from_db():
     session.query(User).delete()   
