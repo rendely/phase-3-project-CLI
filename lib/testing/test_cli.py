@@ -65,3 +65,12 @@ class TestLocation:
         result = runner.invoke(cli, ['location', 'get-all'])
         assert result.exit_code == 0
         assert 'Location(id=' in result.output
+
+class TestTrip:
+    '''[CLI trip commands]''' 
+    def test_cli_trip_add(self):
+        '''cli trip add'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['trip', 'add', '--name=TestTripName', '--year=1234'])
+        assert result.exit_code == 0
+        assert "Added record to trips: {'name': 'TestTripName', 'year': 1234}\n" in result.output

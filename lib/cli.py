@@ -64,10 +64,23 @@ location_group.add_command(get_all_locations)
 """trips command group
    all commands applied to the Trip class
 """
-# TODO
+@click.group(name='trip')
+def trip_group():
+    '''Group of trip commands'''
+    pass
+
+@click.command(name='add')
+@click.option('--name', prompt='Trip Name', type=str)
+@click.option('--year', prompt='Year', type=int)
+def add_trip(name, year):
+    '''Creates a new trip with {name} and {year}'''
+    add_to_db('trips', {'name': name, 'year': year})
+
+trip_group.add_command(add_trip)
 
 cli.add_command(user_group)
 cli.add_command(location_group)
+cli.add_command(trip_group)
 
 if __name__ == "__main__":
     cli()

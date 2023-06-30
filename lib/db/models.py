@@ -28,3 +28,13 @@ class Location(Base):
 
     def __repr__(self):
         return f'Location(id={self.id}, city={self.city}, country={self.country})'        
+
+class Trip(Base):
+    __tablename__ = 'trips'
+
+    id = Column(Integer(), primary_key=True)
+    name = Column(String())
+    year = Column(Integer())
+
+    def __repr__(self):
+        return f'Trip(id={self.id}, name={self.name}, year={self.year})'                

@@ -1,13 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from db.models import User, Location
+from db.models import User, Location, Trip
 
 engine = create_engine('sqlite:///db/trippy.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-class_lookup = {'users': User, 'locations': Location}
+class_lookup = {'users': User, 'locations': Location, 'trips': Trip}
 
 def add_to_db(table, data):
     db_class = class_lookup[table]
