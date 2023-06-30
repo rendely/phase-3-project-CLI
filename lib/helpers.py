@@ -15,10 +15,11 @@ def add_to_db(table, data):
     session.commit()
     print(f'Added record to {table}: {data}')
 
-def update_user_in_db(id, new_name):
-    session.query(User).filter(User.id==id).update({User.name: new_name})
+def update_in_db(table, id, data):
+    if table == 'user':
+        session.query(User).filter(User.id==id).update({User.name: data.new_name})
     session.commit()
-    print(f"Updated User.id={id} to new name: {new_name}")
+    print(f"Updated record in {table} id={id} to {data}")
 
 def get_all_from_db(table):
     db_class = class_lookup[table]

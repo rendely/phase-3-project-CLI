@@ -34,7 +34,7 @@ class TestUser:
         runner = CliRunner()
         result = runner.invoke(cli, ['user', 'update', '--id=10', '--name=NewTestName'])
         assert result.exit_code == 0
-        assert 'Updated User.id=10 to new name: NewTestName' in result.output    
+        assert "Updated record in users id=10 to {'new_name': 'NewTestName'}\n" in result.output    
     
     def test_cli_user_get_all(self):
         '''cli user get-all'''

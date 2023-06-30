@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-from helpers import add_to_db, get_all_from_db
-from helpers import update_user_in_db
+from helpers import add_to_db, get_all_from_db, update_in_db
 import click
 
 @click.group()
@@ -22,19 +21,17 @@ def user_group():
 def add_user(name):
     '''Creates a new user with {name}'''
     add_to_db('users', {'name': name})
-    # add_user_to_db(name)
 
 @click.command(name='update')
 @click.option('--id', prompt='User\'s id', type=str)
 @click.option('--name', prompt='Updated name', type=str)
 def update_user(id, name):
     '''Updates the user's name with name`'''
-    update_user_in_db(id, name)
+    update_in_db('users', id, {'new_name': name})
 
 @click.command(name='get-all')
 def get_all_users():
     '''Gets all users'''
-    # get_all_users_from_db()
     get_all_from_db('users')
 
 user_group.add_command(add_user)        
