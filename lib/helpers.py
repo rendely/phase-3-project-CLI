@@ -1,9 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from db.models import User, Location, Trip
+import os
 
-engine = create_engine('sqlite:///db/trippy.db')
+database_path = os.path.abspath("db/trippy.db")
+
+engine = create_engine(f'sqlite:///{database_path}')
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -17,9 +19,11 @@ def add_to_db(table, data):
 
 def update_in_db(table, id, data):
     if table == 'user':
-        session.query(User).filter(User.id==id).update({User.name: data.new_name})
-    session.commit()
+        user = session.get(User, id)
+        user.name = data.new_name    
+        session.commit()
     print(f"Updated record in {table} id={id} to {data}")
+
 
 def get_all_from_db(table):
     db_class = class_lookup[table]

@@ -35,9 +35,9 @@ def run_seed():
     for i in range(0,10):
       users.append(User(name=fake.first_name()))
     
-    users[0].trips.append(trips[0])
-
     session.add_all(users)
+
+    users[0].trips.append(trips[0])
 
     session.commit()
     session.close()
