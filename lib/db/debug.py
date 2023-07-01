@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import User
+from models import User, Location, Trip
 
 if __name__ == '__main__':
     

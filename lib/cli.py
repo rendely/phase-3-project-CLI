@@ -8,6 +8,8 @@ def cli():
     '''Command line for trip management'''
     pass
 
+
+
 """user command group
    all commands applied to the User class
 """
@@ -38,6 +40,8 @@ user_group.add_command(add_user)
 user_group.add_command(update_user)
 user_group.add_command(get_all_users)
 
+
+
 """location command group
    all commands applied to the Location class
 """
@@ -61,6 +65,8 @@ def get_all_locations():
 location_group.add_command(add_location)
 location_group.add_command(get_all_locations)            
 
+
+
 """trips command group
    all commands applied to the Trip class
 """
@@ -78,9 +84,12 @@ def add_trip(name, year):
 
 trip_group.add_command(add_trip)
 
+
+
 cli.add_command(user_group)
 cli.add_command(location_group)
 cli.add_command(trip_group)
+
 
 if __name__ == "__main__":
     cli()
