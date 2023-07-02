@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from helpers import add_to_db, get_all_from_db, update_in_db, add_join_to_db, remove_join_from_db
+from helpers import add_to_db, get_all_from_db, update_in_db, add_join_to_db, remove_join_from_db, reset_db
 import click
 
 @click.group()
@@ -8,7 +8,11 @@ def cli():
     '''Command line for trip management'''
     pass
 
+@click.command(name='reset')
+def reset():
+    reset_db()
 
+cli.add_command(reset)
 
 """user command group
    all commands applied to the User class
@@ -117,7 +121,6 @@ trip_group.add_command(add_trip)
 trip_group.add_command(get_all_trips)
 trip_group.add_command(add_trip_location)
 trip_group.add_command(remove_trip_location)
-
 
 cli.add_command(user_group)
 cli.add_command(location_group)

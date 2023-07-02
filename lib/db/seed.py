@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 from faker import Faker
 import random
+import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import User, Location, Trip, user_trip, trip_location
+from . models import User, Location, Trip, user_trip, trip_location
 
 def run_seed():
 
-    engine = create_engine('sqlite:///trippy.db')
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    database_path = os.path.join(current_dir, "trippy.db")
+    engine = create_engine(f'sqlite:///{database_path}')
+    # engine = create_engine('sqlite:///trippy.db')
     Session = sessionmaker(bind=engine)
     session = Session()
 

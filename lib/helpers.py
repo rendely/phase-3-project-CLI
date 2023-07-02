@@ -1,15 +1,20 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.models import User, Location, Trip
+from db.seed import run_seed
 import os
 
-database_path = os.path.abspath("db/trippy.db")
-
+current_dir = os.path.dirname(os.path.abspath(__file__))
+database_path = os.path.join(current_dir, "trippy.db")
 engine = create_engine(f'sqlite:///{database_path}')
 Session = sessionmaker(bind=engine)
 session = Session()
 
 class_lookup = {'users': User, 'locations': Location, 'trips': Trip}
+
+def reset_db():
+    run_seed()
+    print('db has been reset')
 
 def add_to_db(table, data):
     db_class = class_lookup[table]
