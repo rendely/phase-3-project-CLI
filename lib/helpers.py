@@ -35,6 +35,37 @@ def add_join_to_db(table, id1, id2):
         if not trip in user.trips:
             user.trips.append(trip)
             session.commit()
-            print('Added to user')
+            print('Added trip to user')
         else:
             print('Already exists')
+    
+    if table == 'trip_location':
+        trip = session.get(Trip, id1)
+        location = session.get(Location, id2)
+        if not location in trip.locations:
+            trip.locations.append(location)
+            session.commit()
+            print('Added location to trip')
+        else:
+            print('Already exists')
+
+def remove_join_from_db(table, id1, id2):
+    if table == 'user_trip':
+        user = session.get(User, id1)
+        trip = session.get(Trip, id2)
+        if trip in user.trips:
+            user.trips.remove(trip)
+            session.commit()
+            print('Removed trip from user')
+        else:
+            print('Did not exist')    
+
+    if table == 'trip_location':
+        trip = session.get(Trip, id1)
+        location = session.get(Location, id2)
+        if location in trip.locations:
+            trip.locations.remove(location)
+            session.commit()
+            print('Removed location from trip')
+        else:
+            print('Did not exist')            

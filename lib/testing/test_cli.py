@@ -42,6 +42,21 @@ class TestUser:
         result = runner.invoke(cli, ['user', 'get-all'])
         assert result.exit_code == 0
         assert 'User(id=' in result.output
+    
+    def test_user_add_trip(self):
+        '''cli user add-trip'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['user', 'add-trip', '--user_id=3', '--trip_id=1'])
+        assert result.exit_code == 0
+        assert "Added trip to user" in result.output
+    
+    def test_user_remove_trip(self):
+        '''cli user remove-trip'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['user', 'remove-trip', '--user_id=3', '--trip_id=1'])
+        assert result.exit_code == 0
+        assert "Removed trip from user" in result.output
+        
 
 class TestLocation:
     '''[CLI location commmands]'''
@@ -74,3 +89,17 @@ class TestTrip:
         result = runner.invoke(cli, ['trip', 'add', '--name=TestTripName', '--year=1234'])
         assert result.exit_code == 0
         assert "Added record to trips: {'name': 'TestTripName', 'year': 1234}\n" in result.output
+    
+    def test_trip_add_location(self):
+        '''cli trip add-location'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=1', '--location_id=8'])
+        assert result.exit_code == 0
+        assert "Added location to trip" in result.output
+
+    def test_trip_remove_location(self):
+        '''cli trip remove-location'''
+        runner = CliRunner()
+        result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=1', '--location_id=8'])
+        assert result.exit_code == 0
+        assert "Removed location from trip" in result.output
