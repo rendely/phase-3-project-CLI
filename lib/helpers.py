@@ -27,3 +27,14 @@ def update_in_db(table, id, data):
 def get_all_from_db(table):
     db_class = class_lookup[table]
     [print(r) for r in session.query(db_class).all()]
+
+def add_join_to_db(table, id1, id2):
+    if table == 'user_trip':
+        user = session.get(User, id1)
+        trip = session.get(Trip, id2)
+        if not trip in user.trips:
+            user.trips.append(trip)
+            session.commit()
+            print('Added to user')
+        else:
+            print('Already exists')
