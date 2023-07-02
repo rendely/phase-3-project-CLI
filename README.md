@@ -8,56 +8,56 @@ A CLI to help users keep track of places they have visited or want to visit. The
 - A database created and modified with SQLAlchemy ORM with 3+ related tables.
 - A well-maintained virtual environment using Pipenv.
 - Proper package structure in your application.
-- Use of lists, dicts, and tuples.
+- TODO: Use of lists, dicts, and **tuples**.
 
 ## Command line options
 
-These are the actions a user should be able to accomplish:
+**Overview**
 
-Action | Command
----|---
-Create a user | `trippy user add --name={name}`
-Update a user | `trippy user update --id={id} --name={name}`
-Get all users | `trippy user get-all`
-Create a location | `trippy location add --city={city} --country={country}`
-Get all locations | `trippy location get-all`
-Update a location | `trippy location update --id={id} --city={city} --country={country}`
-Get all locations | `trippy locations get-all`
-Create a trip | `trippy trip add --name={name} --year={year} --status={status}`
-Update a trip | TODO
-Get all trips | TODO
-Add location to trip | TODO
-Remove location from trip | TODO
-Add user to trip | TODO
-Remove user from trip | TODO
-Get completed trips | TODO
-Get planned trips | TODO
+```markdown
+trippy [OPTIONS] COMMAND [ARGS]...
+Options:
+  --help  Show this message and exit.
 
-## Database structure
+Commands:
+  location  Group of location commands
+  reset     resets the db with seed.py
+  trip      Group of trip commands
+  user      Group of user commands
+```
 
-User Table: This table stores details about each user.
+**user commands**
 
-- id (Primary Key)
-- name
+```markdown
+trippy user [OPTIONS] COMMAND [ARGS]...
+Commands:
+  add          Creates a new user with {name}
+  add-trip     Adds a trip to a user's trips
+  get-all      Gets all users
+  get-trips    Gets the trips belonging to a user
+  remove-trip  Removes a trip from a user's trips
+  update       Updates the user's name with name
+```
 
----
+**location commands**
 
-Location Table: This table stores all the locations
+```markdown
+trippy location [OPTIONS] COMMAND [ARGS]...
+Commands:
+  add      Creates a new location with {city} and {country}
+  get-all  Gets all locations
+```
 
-- id (Primary Key)
-- name (Name of the location, e.g., 'Paris')
-- country
+**trip commands**
 
----
-
-Trips Table: This table stores information about the trips a user has planned or completed.
-
-- id (Primary Key)
-- user_id (Foreign Key referencing User Table)
-- location_id (Foreign Key referencing Location Table)
-- month
-- year
-- status ('planned' or 'completed')
+```markdown
+trippy trip [OPTIONS] COMMAND [ARGS]...
+Commands:
+  add              Creates a new trip with {name} and {year}
+  add-location     Ads a location to a trip
+  get-all          Gets all trips
+  remove-location  Removes a location from a trip
+```
 
 ## Useful commandline arguments for development
 
