@@ -13,7 +13,6 @@ def run_seed():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     database_path = os.path.join(current_dir, "trippy.db")
     engine = create_engine(f'sqlite:///{database_path}')
-    # engine = create_engine('sqlite:///trippy.db')
     Session = sessionmaker(bind=engine)
     session = Session()
 

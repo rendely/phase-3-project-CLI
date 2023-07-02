@@ -10,6 +10,7 @@ def cli():
 
 @click.command(name='reset')
 def reset():
+    """resets the db with seed.py"""
     reset_db()
 
 cli.add_command(reset)
@@ -32,7 +33,7 @@ def add_user(name):
 @click.option('--id', prompt='User\'s id', type=str)
 @click.option('--name', prompt='Updated name', type=str)
 def update_user(id, name):
-    '''Updates the user's name with name`'''
+    '''Updates the user's name with name'''
     update_in_db('users', id, {'new_name': name})
 
 @click.command(name='get-all')
@@ -44,6 +45,7 @@ def get_all_users():
 @click.option('--user_id', prompt='User\'s id', type=str)
 @click.option('--trip_id', prompt='Trips\'s id', type=str)
 def add_user_trip(user_id, trip_id):
+    """Adds a trip to a user's trips"""
     add_join_to_db('user_trip', user_id, trip_id)
 
 
@@ -51,6 +53,7 @@ def add_user_trip(user_id, trip_id):
 @click.option('--user_id', prompt='User\'s id', type=str)
 @click.option('--trip_id', prompt='Trips\'s id', type=str)
 def remove_user_trip(user_id, trip_id):
+    """Removes a trip from a user's trips"""
     remove_join_from_db('user_trip', user_id, trip_id)
 
 user_group.add_command(add_user)        
@@ -102,19 +105,21 @@ def add_trip(name, year):
 
 @click.command(name='get-all')
 def get_all_trips():
-    '''Gets all users'''
+    '''Gets all trips'''
     get_all_from_db('trips')
 
 @click.command(name='add-location')
 @click.option('--trip_id', prompt='Trip\'s id', type=str)
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def add_trip_location(trip_id, location_id):
+    """Ads a location to a trip"""
     add_join_to_db('trip_location', trip_id, location_id)
 
 @click.command(name='remove-location')
 @click.option('--trip_id', prompt='Trip\'s id', type=str)
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def remove_trip_location(trip_id, location_id):
+    """Removes a location from a trip"""
     remove_join_from_db('trip_location', trip_id, location_id)    
 
 trip_group.add_command(add_trip)
