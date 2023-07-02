@@ -26,9 +26,13 @@ def run_seed():
     fake = Faker()
 
     locations = []
-    for i in range(0,10):
-      locations.append(Location(city=fake.city(), country=fake.country()))
-
+    locations.append(Location(city='Tokyo', country='Japan'))
+    locations.append(Location(city='Kyoto', country='Japan'))
+    locations.append(Location(city='Paris', country='France'))
+    locations.append(Location(city='London', country='England'))
+    locations.append(Location(city='Barcelona', country='Spain'))
+    locations.append(Location(city='Milan', country='Italy'))
+    
     session.add_all(locations)
 
     trips = []
@@ -43,9 +47,9 @@ def run_seed():
     
     session.add_all(users)
 
-    users[0].trips.append(trips[0])
-    trips[0].locations.extend(locations[0:4])
-    trips[1].locations.extend(locations[5:10])
+    users[0].trips.extend(trips)
+    trips[0].locations.extend(locations[0:1])
+    trips[1].locations.extend(locations[2:4])
 
     session.commit()
     session.close()

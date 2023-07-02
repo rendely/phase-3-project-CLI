@@ -93,13 +93,13 @@ class TestTrip:
     def test_trip_add_location(self):
         '''cli trip add-location'''
         runner = CliRunner()
-        result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=1', '--location_id=8'])
+        result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
         assert "Added location to trip" in result.output
 
     def test_trip_remove_location(self):
         '''cli trip remove-location'''
         runner = CliRunner()
-        result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=1', '--location_id=8'])
+        result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
         assert "Removed location from trip" in result.output

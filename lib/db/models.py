@@ -35,7 +35,7 @@ class User(Base):
     trips = relationship('Trip', secondary=user_trip, back_populates='users')
 
     def __repr__(self):
-        return f'User(id={self.id}, name={self.name}, trips={self.trips})'
+        return f'\nUser(id={self.id}, name={self.name}, trips=[{len(self.trips)} trips])'
 
 class Location(Base):
     __tablename__ = 'locations'
@@ -46,7 +46,7 @@ class Location(Base):
     trips = relationship('Trip', secondary=trip_location, back_populates='locations')
 
     def __repr__(self):
-        return f'Location(id={self.id}, city={self.city}, country={self.country}, trips={self.trips})'        
+        return f'\nLocation(id={self.id}, city={self.city}, country={self.country})'        
 
 class Trip(Base):
     __tablename__ = 'trips'
@@ -58,4 +58,4 @@ class Trip(Base):
     locations = relationship('Location', secondary=trip_location, back_populates='trips')
 
     def __repr__(self):
-        return f'Trip(id={self.id}, name={self.name}, year={self.year}, locations={self.locations})'                
+        return f'\nTrip(id={self.id}, name={self.name}, year={self.year}, locations=[{len(self.locations)} locations)'                
