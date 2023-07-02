@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-from helpers import add_to_db, get_all_from_db, update_in_db, add_join_to_db, remove_join_from_db, reset_db
+from helpers import add_to_db, get_all_from_db, update_in_db 
+from helpers import add_join_to_db, remove_join_from_db, reset_db
+from helpers import get_user_trips_from_db
 import click
 
 @click.group()
@@ -15,8 +17,10 @@ def reset():
 
 cli.add_command(reset)
 
-"""user command group
-   all commands applied to the User class
+""" * 
+    * user command group
+    * all commands applied to the User class
+    *
 """
 @click.group(name='user')
 def user_group():
@@ -56,15 +60,25 @@ def remove_user_trip(user_id, trip_id):
     """Removes a trip from a user's trips"""
     remove_join_from_db('user_trip', user_id, trip_id)
 
+@click.command(name='get-trips')
+@click.option('--user_id', prompt="User's id", type=str)
+@click.option('--locations', is_flag=True)
+def get_user_trips(user_id, locations):
+    """Gets the trips belonging to a user"""
+    get_user_trips_from_db(user_id, locations)
+
 user_group.add_command(add_user)        
 user_group.add_command(update_user)
 user_group.add_command(get_all_users)
 user_group.add_command(add_user_trip)
 user_group.add_command(remove_user_trip)
+user_group.add_command(get_user_trips)
 
 
-"""location command group
-   all commands applied to the Location class
+""" *
+    * location command group
+    * all commands applied to the Location class
+    *
 """
 @click.group(name='location')
 def location_group():
@@ -88,8 +102,10 @@ location_group.add_command(get_all_locations)
 
 
 
-"""trips command group
-   all commands applied to the Trip class
+""" *
+    * trips command group
+    * all commands applied to the Trip class
+    *
 """
 @click.group(name='trip')
 def trip_group():

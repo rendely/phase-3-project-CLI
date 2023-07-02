@@ -47,8 +47,8 @@ def run_seed():
     session.add_all(users)
 
     users[0].trips.extend(trips)
-    trips[0].locations.extend(locations[0:1])
-    trips[1].locations.extend(locations[2:4])
+    trips[0].locations.extend(locations[0:2])
+    trips[1].locations.extend(locations[2:5])
 
     session.commit()
     session.close()

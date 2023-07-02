@@ -34,6 +34,14 @@ def get_all_from_db(table):
     db_class = class_lookup[table]
     [print(r) for r in session.query(db_class).all()]
 
+def get_user_trips_from_db(id, locations):
+    trips = session.get(User, id).trips
+    for trip in trips:
+        print(trip)
+        if locations:
+            [print(f"\t{l}") for l in trip.locations]
+
+
 def add_join_to_db(table, id1, id2):
     if table == 'user_trip':
         user = session.get(User, id1)
