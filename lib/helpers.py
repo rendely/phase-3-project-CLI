@@ -24,7 +24,6 @@ def update_in_db(table, id, data):
         session.commit()
     print(f"Updated record in {table} id={id} to {data}")
 
-
 def get_all_from_db(table):
     db_class = class_lookup[table]
     [print(r) for r in session.query(db_class).all()]

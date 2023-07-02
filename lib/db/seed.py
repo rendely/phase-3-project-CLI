@@ -5,7 +5,7 @@ import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import User, Location, Trip, user_trip
+from models import User, Location, Trip, user_trip, trip_location
 
 def run_seed():
 
@@ -17,6 +17,7 @@ def run_seed():
     session.query(Location).delete()
     session.query(Trip).delete()
     session.query(user_trip).delete()
+    session.query(trip_location).delete()
 
     fake = Faker()
 
@@ -28,6 +29,7 @@ def run_seed():
 
     trips = []
     trips.append(Trip(name='Japan trip', year=2016))
+    trips.append(Trip(name='Europe trip', year=2022))
 
     session.add_all(trips)
 
@@ -38,6 +40,8 @@ def run_seed():
     session.add_all(users)
 
     users[0].trips.append(trips[0])
+    trips[0].locations.extend(locations[0:4])
+    trips[1].locations.extend(locations[5:10])
 
     session.commit()
     session.close()

@@ -18,6 +18,14 @@ user_trip = Table(
     extend_existing=True,
 )
 
+trip_location = Table(
+    'trip_locations',
+    Base.metadata,
+    Column('trip_id', ForeignKey('trips.id'), primary_key=True),
+    Column('location_id', ForeignKey('locations.id'), primary_key=True),
+    extend_existing=True,
+)
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -35,9 +43,10 @@ class Location(Base):
     id = Column(Integer(), primary_key=True)
     country = Column(String())
     city = Column(String())
+    trips = relationship('Trip', secondary=trip_location, back_populates='locations')
 
     def __repr__(self):
-        return f'Location(id={self.id}, city={self.city}, country={self.country})'        
+        return f'Location(id={self.id}, city={self.city}, country={self.country}, trips={self.trips})'        
 
 class Trip(Base):
     __tablename__ = 'trips'
@@ -46,6 +55,7 @@ class Trip(Base):
     name = Column(String())
     year = Column(Integer())
     users = relationship('User', secondary=user_trip, back_populates='trips')
+    locations = relationship('Location', secondary=trip_location, back_populates='trips')
 
     def __repr__(self):
-        return f'Trip(id={self.id}, name={self.name}, year={self.year})'                
+        return f'Trip(id={self.id}, name={self.name}, year={self.year}, locations={self.locations})'                
