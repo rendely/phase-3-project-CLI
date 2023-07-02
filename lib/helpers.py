@@ -5,7 +5,8 @@ from db.seed import run_seed
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-database_path = os.path.join(current_dir, "trippy.db")
+database_path = os.path.join(current_dir, "db/trippy.db")
+print(database_path)
 engine = create_engine(f'sqlite:///{database_path}')
 Session = sessionmaker(bind=engine)
 session = Session()
