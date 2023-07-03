@@ -2,17 +2,11 @@
 
 ## Overview
 
-A CLI to help users keep track of places they have visited or want to visit. These are the project requirements:
-
-- A CLI application that solves a real-world problem and adheres to best practices.
-- A database created and modified with SQLAlchemy ORM with 3+ related tables.
-- A well-maintained virtual environment using Pipenv.
-- Proper package structure in your application.
-- TODO: Use of lists, dicts, and **tuples**.
+A CLI to help users keep track of trips. Users can create trips and associate them with a list of locations.
 
 ## Command line options
 
-**Overview**
+### Overview
 
 ```markdown
 trippy [OPTIONS] COMMAND [ARGS]...
@@ -26,7 +20,7 @@ Commands:
   user      Group of user commands
 ```
 
-**user commands**
+### user commands
 
 ```markdown
 trippy user [OPTIONS] COMMAND [ARGS]...
@@ -39,7 +33,7 @@ Commands:
   update       Updates the user's name with name
 ```
 
-**location commands**
+### location commands
 
 ```markdown
 trippy location [OPTIONS] COMMAND [ARGS]...
@@ -48,7 +42,7 @@ Commands:
   get-all  Gets all locations
 ```
 
-**trip commands**
+### trip commands
 
 ```markdown
 trippy trip [OPTIONS] COMMAND [ARGS]...
