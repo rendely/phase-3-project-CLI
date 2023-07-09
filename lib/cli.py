@@ -2,7 +2,7 @@
 
 from helpers import add_to_db, get_all_from_db, update_in_db 
 from helpers import add_join_to_db, remove_join_from_db, reset_db
-from helpers import get_attribute_from_db
+from helpers import get_attribute_from_db, remove_from_db
 import click
 
 @click.group()
@@ -30,7 +30,7 @@ def user_group():
 @click.command(name='add')
 @click.option('--name', prompt='User\'s name',type=str)
 def add_user(name):
-    '''Creates a new user with {name}'''
+    '''Creates a new user'''
     add_to_db('users', {'name': name})
 
 @click.command(name='update')
@@ -38,7 +38,7 @@ def add_user(name):
 @click.option('--name', prompt='Updated name', type=str)
 def update_user(id, name):
     '''Updates the user's name with name'''
-    update_in_db('users', id, {'new_name': name})
+    update_in_db('users', id, {'name': name})
 
 @click.command(name='get-all')
 def get_all_users():
@@ -88,7 +88,7 @@ def location_group():
 @click.option('--city', prompt='City', type=str)
 @click.option('--country', prompt='Country',type=str)
 def add_location(city, country):
-    '''Creates a new location with {city} and {country}'''
+    '''Creates a new location'''
     add_to_db('locations', {'city': city, 'country': country})
 
 @click.command(name='get-all')
@@ -96,8 +96,15 @@ def get_all_locations():
     '''Gets all locations'''
     get_all_from_db('locations')
 
+@click.command(name='remove')
+@click.option('--location_id', prompt='Location\'s id', type=str)
+def remove_location(location_id):
+    '''Gets all locations'''
+    remove_from_db('locations', location_id)    
+
 location_group.add_command(add_location)
-location_group.add_command(get_all_locations)            
+location_group.add_command(get_all_locations)      
+location_group.add_command(remove_location)            
 
 
 
@@ -115,7 +122,7 @@ def trip_group():
 @click.option('--name', prompt='Trip Name', type=str)
 @click.option('--year', prompt='Year', type=int)
 def add_trip(name, year):
-    '''Creates a new trip with {name} and {year}'''
+    '''Creates a new trip'''
     add_to_db('trips', {'name': name, 'year': year})
 
 @click.command(name='get-all')

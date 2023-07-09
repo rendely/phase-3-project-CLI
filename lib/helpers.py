@@ -44,13 +44,12 @@ def get_attribute_from_db(table, id, attr):
     attribute = getattr(session.get(db_class, id), attr)
     for i in attribute:
         print(i)
-# def get_user_trips_from_db(id, locations):
-#     trips = session.get(User, id).trips
-#     for trip in trips:
-#         print(trip)
-#         if locations:
-#             [print(f"\t{l}") for l in trip.locations]
 
+def remove_from_db(table, id):
+    db_class = class_lookup[table]
+    session.query(db_class).filter(getattr(db_class,'id')==id).delete()
+    session.commit()
+    print(session.get(db_class, id))
 
 def add_join_to_db(table, id1, id2):
     db_class = class_lookup[table]

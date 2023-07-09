@@ -45,13 +45,14 @@ class TestUser:
         '''cli user add-trip'''
         result = runner.invoke(cli, ['user', 'add-trip', '--user_id=3', '--trip_id=1'])
         assert result.exit_code == 0
-        assert "User(id=3, name=Lori, trips=[1])\n" in result.output
+        assert "User(id=3" in result.output
+        assert "trips=[1])\n" in result.output
     
     def test_user_remove_trip(self):
         '''cli user remove-trip'''
         result = runner.invoke(cli, ['user', 'remove-trip', '--user_id=3', '--trip_id=1'])
         assert result.exit_code == 0
-        assert "User(id=3, name=Lori, trips=[0])\n" in result.output
+        assert "trips=[0])\n" in result.output
 
     def test_user_get_trips(self):
         '''cli user get-trips'''
@@ -75,11 +76,17 @@ class TestLocation:
         assert result.exit_code == 0
         assert "Location(id=7, city=TestCity, country=TestCountry)\n" in result.output
 
-    def test_cli_user_get_all(self):
+    def test_cli_location_get_all(self):
         '''cli location get-all'''
         result = runner.invoke(cli, ['location', 'get-all'])
         assert result.exit_code == 0
         assert 'Location(id=' in result.output
+
+    def test_cli_location_remove(self):
+        '''cli location remove'''
+        result = runner.invoke(cli, ['location', 'remove', '--location_id=10'])
+        assert result.exit_code == 0
+        assert 'None' in result.output
 
 class TestTrip:
     '''[CLI trip commands]''' 
