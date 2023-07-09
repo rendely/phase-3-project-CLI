@@ -2,7 +2,7 @@
 
 from helpers import add_to_db, get_all_from_db, update_in_db 
 from helpers import add_join_to_db, remove_join_from_db, reset_db
-from helpers import get_user_trips_from_db
+from helpers import get_attribute_from_db
 import click
 
 @click.group()
@@ -50,7 +50,7 @@ def get_all_users():
 @click.option('--trip_id', prompt='Trips\'s id', type=str)
 def add_user_trip(user_id, trip_id):
     """Adds a trip to a user's trips"""
-    add_join_to_db('user_trip', user_id, trip_id)
+    add_join_to_db('user_trips', user_id, trip_id)
 
 
 @click.command(name='remove-trip')
@@ -58,14 +58,13 @@ def add_user_trip(user_id, trip_id):
 @click.option('--trip_id', prompt='Trips\'s id', type=str)
 def remove_user_trip(user_id, trip_id):
     """Removes a trip from a user's trips"""
-    remove_join_from_db('user_trip', user_id, trip_id)
+    remove_join_from_db('user_trips', user_id, trip_id)
 
 @click.command(name='get-trips')
 @click.option('--user_id', prompt="User's id", type=str)
-@click.option('--locations', is_flag=True)
-def get_user_trips(user_id, locations):
+def get_user_trips(user_id):
     """Gets the trips belonging to a user"""
-    get_user_trips_from_db(user_id, locations)
+    get_attribute_from_db('users', user_id, 'trips')
 
 user_group.add_command(add_user)        
 user_group.add_command(update_user)
@@ -129,14 +128,14 @@ def get_all_trips():
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def add_trip_location(trip_id, location_id):
     """Ads a location to a trip"""
-    add_join_to_db('trip_location', trip_id, location_id)
+    add_join_to_db('trip_locations', trip_id, location_id)
 
 @click.command(name='remove-location')
 @click.option('--trip_id', prompt='Trip\'s id', type=str)
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def remove_trip_location(trip_id, location_id):
     """Removes a location from a trip"""
-    remove_join_from_db('trip_location', trip_id, location_id)    
+    remove_join_from_db('trip_locations', trip_id, location_id)    
 
 trip_group.add_command(add_trip)
 trip_group.add_command(get_all_trips)

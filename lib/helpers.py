@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
 from db.models import User, Location, Trip
 from db.seed import run_seed
-import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 database_path = os.path.join(current_dir, "db/trippy.db")
@@ -11,7 +11,9 @@ engine = create_engine(f'sqlite:///{database_path}')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-class_lookup = {'users': User, 'locations': Location, 'trips': Trip}
+class_lookup = {'users': User, 'locations': Location, 
+                'trips': Trip, 'user_trips': (User, Trip, 'trips'), 
+                'trip_locations': (Trip, Location, 'locations')}
 
 def reset_db():
     run_seed()
@@ -21,65 +23,51 @@ def add_to_db(table, data):
     db_class = class_lookup[table]
     session.add(db_class(**data))
     session.commit()
-    print(f'Added record to {table}: {data}')
+    added = session.query(db_class).filter_by(**data).first()
+    print(added)
 
 def update_in_db(table, id, data):
-    if table == 'user':
-        user = session.get(User, id)
-        user.name = data.new_name    
-        session.commit()
-    print(f"Updated record in {table} id={id} to {data}")
+    db_class = class_lookup[table]
+    record = session.get(db_class, id)
+    for key, value in data.items():
+        setattr(record, key, value)
+    session.commit()
+    updated = session.get(db_class, id)
+    print(updated)
 
 def get_all_from_db(table):
     db_class = class_lookup[table]
     [print(r) for r in session.query(db_class).all()]
 
-def get_user_trips_from_db(id, locations):
-    trips = session.get(User, id).trips
-    for trip in trips:
-        print(trip)
-        if locations:
-            [print(f"\t{l}") for l in trip.locations]
+def get_attribute_from_db(table, id, attr):
+    db_class = class_lookup[table]
+    attribute = getattr(session.get(db_class, id), attr)
+    for i in attribute:
+        print(i)
+# def get_user_trips_from_db(id, locations):
+#     trips = session.get(User, id).trips
+#     for trip in trips:
+#         print(trip)
+#         if locations:
+#             [print(f"\t{l}") for l in trip.locations]
 
 
 def add_join_to_db(table, id1, id2):
-    if table == 'user_trip':
-        user = session.get(User, id1)
-        trip = session.get(Trip, id2)
-        if not trip in user.trips:
-            user.trips.append(trip)
-            session.commit()
-            print('Added trip to user')
-        else:
-            print('Already exists')
-    
-    if table == 'trip_location':
-        trip = session.get(Trip, id1)
-        location = session.get(Location, id2)
-        if not location in trip.locations:
-            trip.locations.append(location)
-            session.commit()
-            print('Added location to trip')
-        else:
-            print('Already exists')
+    db_class = class_lookup[table]
+    record1 = session.get(db_class[0], id1)
+    record2 = session.get(db_class[1], id2)
+    attribute = getattr(record1, db_class[2])
+    if not record2 in attribute:
+        attribute.append(record2)
+        session.commit()
+        print(session.get(db_class[0], id1))
 
 def remove_join_from_db(table, id1, id2):
-    if table == 'user_trip':
-        user = session.get(User, id1)
-        trip = session.get(Trip, id2)
-        if trip in user.trips:
-            user.trips.remove(trip)
-            session.commit()
-            print('Removed trip from user')
-        else:
-            print('Did not exist')    
-
-    if table == 'trip_location':
-        trip = session.get(Trip, id1)
-        location = session.get(Location, id2)
-        if location in trip.locations:
-            trip.locations.remove(location)
-            session.commit()
-            print('Removed location from trip')
-        else:
-            print('Did not exist')            
+    db_class = class_lookup[table]
+    record1 = session.get(db_class[0], id1)
+    record2 = session.get(db_class[1], id2)
+    attribute = getattr(record1, db_class[2])
+    if record2 in attribute:
+        attribute.remove(record2)
+        session.commit()
+        print(session.get(db_class[0], id1))

@@ -27,13 +27,13 @@ class TestUser:
         '''cli user add'''
         result = runner.invoke(cli, ['user', 'add', '--name', 'TestName'])
         assert result.exit_code == 0
-        assert "Added record to users: {'name': 'TestName'}" in result.output
+        assert "User(id=11, name=TestName, trips=[0])\n" in result.output
 
     def test_cli_user_update(self):
         '''cli user update'''
         result = runner.invoke(cli, ['user', 'update', '--id=10', '--name=NewTestName'])
         assert result.exit_code == 0
-        assert "Updated record in users id=10 to {'new_name': 'NewTestName'}\n" in result.output    
+        assert "User(id=10, name=NewTestName, trips=[0])\n" in result.output    
     
     def test_cli_user_get_all(self):
         '''cli user get-all'''
@@ -45,13 +45,13 @@ class TestUser:
         '''cli user add-trip'''
         result = runner.invoke(cli, ['user', 'add-trip', '--user_id=3', '--trip_id=1'])
         assert result.exit_code == 0
-        assert "Added trip to user" in result.output
+        assert "User(id=3, name=Lori, trips=[1])\n" in result.output
     
     def test_user_remove_trip(self):
         '''cli user remove-trip'''
         result = runner.invoke(cli, ['user', 'remove-trip', '--user_id=3', '--trip_id=1'])
         assert result.exit_code == 0
-        assert "Removed trip from user" in result.output
+        assert "User(id=3, name=Lori, trips=[0])\n" in result.output
 
     def test_user_get_trips(self):
         '''cli user get-trips'''
@@ -73,7 +73,7 @@ class TestLocation:
         '''cli location add'''
         result = runner.invoke(cli, ['location', 'add', '--city=TestCity', '--country=TestCountry'])
         assert result.exit_code == 0
-        assert "Added record to locations: {'city': 'TestCity', 'country': 'TestCountry'}\n" in result.output
+        assert "Location(id=7, city=TestCity, country=TestCountry)\n" in result.output
 
     def test_cli_user_get_all(self):
         '''cli location get-all'''
@@ -87,16 +87,16 @@ class TestTrip:
         '''cli trip add'''
         result = runner.invoke(cli, ['trip', 'add', '--name=TestTripName', '--year=1234'])
         assert result.exit_code == 0
-        assert "Added record to trips: {'name': 'TestTripName', 'year': 1234}\n" in result.output
+        assert "Trip(id=3, name=TestTripName, year=1234, locations=[0])\n" in result.output
     
     def test_trip_add_location(self):
         '''cli trip add-location'''
         result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
-        assert "Added location to trip" in result.output
+        assert "Trip(id=2, name=Europe trip, year=2022, locations=[4])\n" in result.output
 
     def test_trip_remove_location(self):
         '''cli trip remove-location'''
         result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
-        assert "Removed location from trip" in result.output
+        assert "Trip(id=2, name=Europe trip, year=2022, locations=[3])\n" in result.output
