@@ -25,7 +25,7 @@ Commands:
 ```markdown
 trippy user [OPTIONS] COMMAND [ARGS]...
 Commands:
-  add          Creates a new user with {name}
+  add          Creates a new user
   add-trip     Adds a trip to a user's trips
   get-all      Gets all users
   get-trips    Gets the trips belonging to a user
@@ -38,8 +38,9 @@ Commands:
 ```markdown
 trippy location [OPTIONS] COMMAND [ARGS]...
 Commands:
-  add      Creates a new location with {city} and {country}
+  add      Creates a new location
   get-all  Gets all locations
+  remove   Remove a location
 ```
 
 ### trip commands
@@ -47,9 +48,10 @@ Commands:
 ```markdown
 trippy trip [OPTIONS] COMMAND [ARGS]...
 Commands:
-  add              Creates a new trip with {name} and {year}
+  add              Creates a new trip
   add-location     Ads a location to a trip
   get-all          Gets all trips
+  remove           Remove a trip
   remove-location  Removes a location from a trip
 ```
 

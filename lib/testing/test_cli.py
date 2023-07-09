@@ -96,14 +96,20 @@ class TestTrip:
         assert result.exit_code == 0
         assert "Trip(id=3, name=TestTripName, year=1234, locations=[0])\n" in result.output
     
-    def test_trip_add_location(self):
+    def test_cli_trip_add_location(self):
         '''cli trip add-location'''
         result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
         assert "Trip(id=2, name=Europe trip, year=2022, locations=[4])\n" in result.output
 
-    def test_trip_remove_location(self):
+    def test_cli_trip_remove_location(self):
         '''cli trip remove-location'''
         result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=2', '--location_id=6'])
         assert result.exit_code == 0
         assert "Trip(id=2, name=Europe trip, year=2022, locations=[3])\n" in result.output
+
+    def test_cli_trip_remove(self):
+        '''cli trip remove'''
+        result = runner.invoke(cli, ['trip', 'remove', '--trip_id=1'])
+        assert result.exit_code == 0
+        assert 'None' in result.output
