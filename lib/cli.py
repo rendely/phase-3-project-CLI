@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from helpers import add_to_db, get_all_from_db, update_in_db 
-from helpers import add_join_to_db, remove_join_from_db, reset_db
-from helpers import get_attribute_from_db, remove_from_db
+from helpers import add_to_db, get_all_from_db, update_in_db, \
+                    add_join_to_db, remove_join_from_db, reset_db, \
+                    get_attribute_from_db, remove_from_db
 import click
 
 @click.group()
