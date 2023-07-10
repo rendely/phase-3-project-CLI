@@ -99,7 +99,7 @@ def get_all_locations():
 @click.command(name='remove')
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def remove_location(location_id):
-    '''Remove a location'''
+    '''Removes a location'''
     remove_from_db('locations', location_id)    
 
 location_group.add_command(add_location)
@@ -134,7 +134,7 @@ def get_all_trips():
 @click.option('--trip_id', prompt='Trip\'s id', type=str)
 @click.option('--location_id', prompt='Location\'s id', type=str)
 def add_trip_location(trip_id, location_id):
-    """Ads a location to a trip"""
+    """Adds a location to a trip"""
     add_join_to_db('trip_locations', trip_id, location_id)
 
 @click.command(name='remove-location')
@@ -147,14 +147,21 @@ def remove_trip_location(trip_id, location_id):
 @click.command(name='remove')
 @click.option('--trip_id', prompt='Trip\'s id', type=str)
 def remove_trip(trip_id):
-    '''Remove a trip'''
+    '''Removes a trip'''
     remove_from_db('trips', trip_id)      
+
+@click.command(name='get-locations')
+@click.option('--trip_id', prompt="Trip's id", type=str)
+def get_trip_locations(trip_id):
+    """Gets the locations belonging to a trip"""
+    get_attribute_from_db('trips', trip_id, 'locations')    
 
 trip_group.add_command(add_trip)
 trip_group.add_command(get_all_trips)
 trip_group.add_command(add_trip_location)
 trip_group.add_command(remove_trip_location)
 trip_group.add_command(remove_trip)
+trip_group.add_command(get_trip_locations)
 
 cli.add_command(user_group)
 cli.add_command(location_group)

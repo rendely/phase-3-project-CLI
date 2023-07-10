@@ -1,12 +1,12 @@
 # Phase 3 CLI Project - Trip Planner
 
-## Overview
+## CLI Overview
 
 A CLI to help users keep track of trips. Users can create trips and associate them with a list of locations.
 
 ## Command line options
 
-### Overview
+### trippy commands
 
 ```markdown
 trippy [OPTIONS] COMMAND [ARGS]...
@@ -49,9 +49,10 @@ Commands:
 trippy trip [OPTIONS] COMMAND [ARGS]...
 Commands:
   add              Creates a new trip
-  add-location     Ads a location to a trip
+  add-location     Adds a location to a trip
   get-all          Gets all trips
-  remove           Remove a trip
+  get-locations    Gets the locations belonging to a trip
+  remove           Removes a trip
   remove-location  Removes a location from a trip
 ```
 
