@@ -2,7 +2,8 @@
 
 from helpers import add_to_db, get_all_from_db, update_in_db, \
                     add_join_to_db, remove_join_from_db, reset_db, \
-                    get_attribute_from_db, remove_from_db, get_all_from_db_as_string
+                    get_attribute_from_db, remove_from_db, get_all_from_db_as_string, \
+                    get_joined_and_unjoined_from_db
 import click
 
 @click.group()
@@ -48,8 +49,14 @@ def get_all_users():
     '''Gets all users'''
     get_all_from_db('users')
 
+def print_users_trips(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    get_joined_and_unjoined_from_db('user_trips', value)
+    return value
+
 @click.command(name='add-trip')
-@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str)
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str, callback=print_users_trips, is_eager=True)
 @click.option('--trip_id', prompt=print_helper('trips')+'Trips\'s id', type=str)
 def add_user_trip(user_id, trip_id):
     """Adds a trip to a user's trips"""

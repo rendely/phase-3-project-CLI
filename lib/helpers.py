@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
-from db.models import User, Location, Trip
+from db.models import User, Location, Trip, user_trip, trip_location
 from db.seed import run_seed
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -11,8 +11,8 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 class_lookup = {'users': User, 'locations': Location, 
-                'trips': Trip, 'user_trips': (User, Trip, 'trips'), 
-                'trip_locations': (Trip, Location, 'locations')}
+                'trips': Trip, 'user_trips': (User, Trip, 'trips', user_trip), 
+                'trip_locations': (Trip, Location, 'locations', trip_location)}
 
 def reset_db():
     run_seed()
@@ -26,6 +26,18 @@ def add_to_db(table, data):
     print('\nAdded:\n')
     print(added)
     print('\n')
+
+def get_joined_and_unjoined_from_db(table, id):
+    db_class = class_lookup[table]
+    joined_data = session.query(db_class[1]).join(db_class[3]).join(db_class[0]).filter(db_class[0].id==id).all()
+    # unjoined_data = session.query(db_class[1]).all()
+    print('\nExisting:')
+    if not joined_data:
+        print('None')
+    else:
+        [print(r) for r in joined_data]
+    print('\nAll available:')
+    # [print(r) for r in unjoined_data]
 
 def update_in_db(table, id, data):
     db_class = class_lookup[table]
@@ -69,6 +81,7 @@ def remove_from_db(table, id):
     print('\n')
 
 def add_join_to_db(table, id1, id2):
+    print(id1, id2)
     db_class = class_lookup[table]
     record1 = session.get(db_class[0], id1)
     record2 = session.get(db_class[1], id2)
