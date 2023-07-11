@@ -2,7 +2,7 @@
 
 from helpers import add_to_db, get_all_from_db, update_in_db, \
                     add_join_to_db, remove_join_from_db, reset_db, \
-                    get_attribute_from_db, remove_from_db
+                    get_attribute_from_db, remove_from_db, get_all_from_db_as_string
 import click
 
 @click.group()
@@ -33,8 +33,11 @@ def add_user(name):
     '''Creates a new user'''
     add_to_db('users', {'name': name})
 
+def print_helper(table):
+    return "\n"+get_all_from_db_as_string(table)+"\n\n"
+
 @click.command(name='update')
-@click.option('--user_id', prompt='User\'s id', type=str)
+@click.option('--user_id', prompt=print_helper('users')+"User's id", type=str)
 @click.option('--name', prompt='Updated name', type=str)
 def update_user(user_id, name):
     '''Updates the user's name with name'''
@@ -46,22 +49,22 @@ def get_all_users():
     get_all_from_db('users')
 
 @click.command(name='add-trip')
-@click.option('--user_id', prompt='User\'s id', type=str)
-@click.option('--trip_id', prompt='Trips\'s id', type=str)
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trips\'s id', type=str)
 def add_user_trip(user_id, trip_id):
     """Adds a trip to a user's trips"""
     add_join_to_db('user_trips', user_id, trip_id)
 
 
 @click.command(name='remove-trip')
-@click.option('--user_id', prompt='User\'s id', type=str)
-@click.option('--trip_id', prompt='Trips\'s id', type=str)
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trips\'s id', type=str)
 def remove_user_trip(user_id, trip_id):
     """Removes a trip from a user's trips"""
     remove_join_from_db('user_trips', user_id, trip_id)
 
 @click.command(name='get-trips')
-@click.option('--user_id', prompt="User's id", type=str)
+@click.option('--user_id', prompt=print_helper('users')+"User's id", type=str)
 def get_user_trips(user_id):
     """Gets the trips belonging to a user"""
     get_attribute_from_db('users', user_id, 'trips')
@@ -97,7 +100,7 @@ def get_all_locations():
     get_all_from_db('locations')
 
 @click.command(name='remove')
-@click.option('--location_id', prompt='Location\'s id', type=str)
+@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
 def remove_location(location_id):
     '''Removes a location'''
     remove_from_db('locations', location_id)    
@@ -131,27 +134,27 @@ def get_all_trips():
     get_all_from_db('trips')
 
 @click.command(name='add-location')
-@click.option('--trip_id', prompt='Trip\'s id', type=str)
-@click.option('--location_id', prompt='Location\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
+@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
 def add_trip_location(trip_id, location_id):
     """Adds a location to a trip"""
     add_join_to_db('trip_locations', trip_id, location_id)
 
 @click.command(name='remove-location')
-@click.option('--trip_id', prompt='Trip\'s id', type=str)
-@click.option('--location_id', prompt='Location\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
+@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
 def remove_trip_location(trip_id, location_id):
     """Removes a location from a trip"""
     remove_join_from_db('trip_locations', trip_id, location_id)    
 
 @click.command(name='remove')
-@click.option('--trip_id', prompt='Trip\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
 def remove_trip(trip_id):
     '''Removes a trip'''
     remove_from_db('trips', trip_id)      
 
 @click.command(name='get-locations')
-@click.option('--trip_id', prompt="Trip's id", type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+"Trip's id", type=str)
 def get_trip_locations(trip_id):
     """Gets the locations belonging to a trip"""
     get_attribute_from_db('trips', trip_id, 'locations')    

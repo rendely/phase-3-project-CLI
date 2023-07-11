@@ -23,7 +23,9 @@ def add_to_db(table, data):
     session.add(db_class(**data))
     session.commit()
     added = session.query(db_class).filter_by(**data).first()
+    print('\nAdded:\n')
     print(added)
+    print('\n')
 
 def update_in_db(table, id, data):
     db_class = class_lookup[table]
@@ -32,23 +34,39 @@ def update_in_db(table, id, data):
         setattr(record, key, value)
     session.commit()
     updated = session.get(db_class, id)
+    print('\nUpdated:\n')
     print(updated)
+    print('\n')
 
 def get_all_from_db(table):
     db_class = class_lookup[table]
+    print(f'\nAll {table}:')
+    print('-------------')
     [print(r) for r in session.query(db_class).all()]
+    print('\n')
+
+def get_all_from_db_as_string(table):
+    db_class = class_lookup[table]
+    records = session.query(db_class).all()
+    records_strings = [str(r) for r in records]
+    return '\n'.join(records_strings)
 
 def get_attribute_from_db(table, id, attr):
     db_class = class_lookup[table]
     attribute = getattr(session.get(db_class, id), attr)
+    print(f'\nAll {attr}')
+    print('-------------')
     for i in attribute:
         print(i)
+    print('\n')
 
 def remove_from_db(table, id):
     db_class = class_lookup[table]
     session.query(db_class).filter(getattr(db_class,'id')==id).delete()
     session.commit()
-    print(session.get(db_class, id))
+    print(f'\nRemoved id={id}, updated list:\n')
+    [print(r) for r in session.query(db_class).all()]
+    print('\n')
 
 def add_join_to_db(table, id1, id2):
     db_class = class_lookup[table]
@@ -58,7 +76,12 @@ def add_join_to_db(table, id1, id2):
     if not record2 in attribute:
         attribute.append(record2)
         session.commit()
-        print(session.get(db_class[0], id1))
+        print(f'\nAdded to {table}')
+        print(record1)
+        [print(a) for a in attribute]
+        print('\n')
+    else:
+        print('\nAlready exists\n')
 
 def remove_join_from_db(table, id1, id2):
     db_class = class_lookup[table]
@@ -68,4 +91,9 @@ def remove_join_from_db(table, id1, id2):
     if record2 in attribute:
         attribute.remove(record2)
         session.commit()
-        print(session.get(db_class[0], id1))
+        print(f'\nRemoved from {table}')
+        print(record1)
+        [print(a) for a in attribute]
+        print('\n')
+    else:
+        print('\nDid not exist\n')

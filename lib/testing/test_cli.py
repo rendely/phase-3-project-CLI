@@ -84,9 +84,9 @@ class TestLocation:
 
     def test_cli_location_remove(self):
         '''cli location remove'''
-        result = runner.invoke(cli, ['location', 'remove', '--location_id=10'])
+        result = runner.invoke(cli, ['location', 'remove', '--location_id=7'])
         assert result.exit_code == 0
-        assert 'None' in result.output
+        assert 'TestCity' not in result.output
 
 class TestTrip:
     '''[CLI trip commands]''' 
@@ -110,6 +110,6 @@ class TestTrip:
 
     def test_cli_trip_remove(self):
         '''cli trip remove'''
-        result = runner.invoke(cli, ['trip', 'remove', '--trip_id=1'])
+        result = runner.invoke(cli, ['trip', 'remove', '--trip_id=3'])
         assert result.exit_code == 0
-        assert 'None' in result.output
+        assert 'TestTripName' not in result.output
