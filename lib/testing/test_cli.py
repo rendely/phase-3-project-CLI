@@ -25,15 +25,15 @@ class TestUser:
 
     def test_cli_user_add(self):
         '''cli user add'''
-        result = runner.invoke(cli, ['user', 'add', '--name', 'TestName'])
+        result = runner.invoke(cli, ['user', 'add', '--name', 'Angela'])
         assert result.exit_code == 0
-        assert "User(id=11, name=TestName, trips=[0])\n" in result.output
+        assert "User(id=3, name=Angela, trips=[0])\n" in result.output
 
     def test_cli_user_update(self):
         '''cli user update'''
-        result = runner.invoke(cli, ['user', 'update', '--id=10', '--name=NewTestName'])
+        result = runner.invoke(cli, ['user', 'update', '--id=3', '--name=Angel'])
         assert result.exit_code == 0
-        assert "User(id=10, name=NewTestName, trips=[0])\n" in result.output    
+        assert "User(id=3, name=Angel, trips=[0])\n" in result.output    
     
     def test_cli_user_get_all(self):
         '''cli user get-all'''
@@ -92,9 +92,9 @@ class TestTrip:
     '''[CLI trip commands]''' 
     def test_cli_trip_add(self):
         '''cli trip add'''
-        result = runner.invoke(cli, ['trip', 'add', '--name=TestTripName', '--year=1234'])
+        result = runner.invoke(cli, ['trip', 'add', '--name=TestTripName', '--year=2030'])
         assert result.exit_code == 0
-        assert "Trip(id=3, name=TestTripName, year=1234, locations=[0])\n" in result.output
+        assert "Trip(id=3, name=TestTripName, year=2030, locations=[0])\n" in result.output
     
     def test_cli_trip_add_location(self):
         '''cli trip add-location'''

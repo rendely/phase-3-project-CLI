@@ -41,7 +41,7 @@ def run_seed():
     session.add_all(trips)
 
     users = []
-    for i in range(0,10):
+    for i in range(0,2):
       users.append(User(name=fake.first_name()))
     
     session.add_all(users)
