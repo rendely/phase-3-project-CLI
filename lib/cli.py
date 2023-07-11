@@ -34,11 +34,11 @@ def add_user(name):
     add_to_db('users', {'name': name})
 
 @click.command(name='update')
-@click.option('--id', prompt='User\'s id', type=str)
+@click.option('--user_id', prompt='User\'s id', type=str)
 @click.option('--name', prompt='Updated name', type=str)
-def update_user(id, name):
+def update_user(user_id, name):
     '''Updates the user's name with name'''
-    update_in_db('users', id, {'name': name})
+    update_in_db('users', user_id, {'name': name})
 
 @click.command(name='get-all')
 def get_all_users():

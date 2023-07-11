@@ -31,7 +31,7 @@ class TestUser:
 
     def test_cli_user_update(self):
         '''cli user update'''
-        result = runner.invoke(cli, ['user', 'update', '--id=3', '--name=Angel'])
+        result = runner.invoke(cli, ['user', 'update', '--user_id=3', '--name=Angel'])
         assert result.exit_code == 0
         assert "User(id=3, name=Angel, trips=[0])\n" in result.output    
     
