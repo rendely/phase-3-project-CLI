@@ -52,12 +52,13 @@ def get_all_users():
 def print_users_trips(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
-    get_joined_and_unjoined_from_db('user_trips', value)
-    return value
+    unjoined = get_joined_and_unjoined_from_db('user_trips', value)
+    if not unjoined: 
+        ctx.exit()
 
 @click.command(name='add-trip')
-@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str, callback=print_users_trips, is_eager=True)
-@click.option('--trip_id', prompt=print_helper('trips')+'Trips\'s id', type=str)
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=int, callback=print_users_trips)
+@click.option('--trip_id', prompt='Trips\'s id', type=int)
 def add_user_trip(user_id, trip_id):
     """Adds a trip to a user's trips"""
     add_join_to_db('user_trips', user_id, trip_id)

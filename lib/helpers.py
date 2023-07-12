@@ -29,15 +29,21 @@ def add_to_db(table, data):
 
 def get_joined_and_unjoined_from_db(table, id):
     db_class = class_lookup[table]
+    all_data = session.query(db_class[1]).all()
     joined_data = session.query(db_class[1]).join(db_class[3]).join(db_class[0]).filter(db_class[0].id==id).all()
-    # unjoined_data = session.query(db_class[1]).all()
+    unjoined_data = [d for d in all_data if d not in joined_data] 
     print('\nExisting:')
     if not joined_data:
         print('None')
     else:
         [print(r) for r in joined_data]
     print('\nAll available:')
-    # [print(r) for r in unjoined_data]
+    if not unjoined_data:
+        print('None')
+    else:
+        [print(r) for r in unjoined_data]
+    print('')
+    return unjoined_data
 
 def update_in_db(table, id, data):
     db_class = class_lookup[table]
