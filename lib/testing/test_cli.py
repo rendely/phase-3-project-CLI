@@ -43,14 +43,14 @@ class TestUser:
     
     def test_user_add_trip(self):
         '''cli user add-trip'''
-        result = runner.invoke(cli, ['user', 'add-trip', '--user_id=3', '--trip_id=1'])
+        result = runner.invoke(cli, ['user', 'add-trip'], input='3\n1\n')
         assert result.exit_code == 0
         assert "User(id=3" in result.output
         assert "trips=[1])\n" in result.output
     
     def test_user_remove_trip(self):
         '''cli user remove-trip'''
-        result = runner.invoke(cli, ['user', 'remove-trip', '--user_id=3', '--trip_id=1'])
+        result = runner.invoke(cli, ['user', 'remove-trip'], input='3\n1\n')
         assert result.exit_code == 0
         assert "trips=[0])\n" in result.output
 
@@ -98,13 +98,13 @@ class TestTrip:
     
     def test_cli_trip_add_location(self):
         '''cli trip add-location'''
-        result = runner.invoke(cli, ['trip', 'add-location', '--trip_id=2', '--location_id=6'])
+        result = runner.invoke(cli, ['trip', 'add-location'], input='2\n6\n')
         assert result.exit_code == 0
         assert "Trip(id=2, name=Europe trip, year=2022, locations=[4])\n" in result.output
 
     def test_cli_trip_remove_location(self):
         '''cli trip remove-location'''
-        result = runner.invoke(cli, ['trip', 'remove-location', '--trip_id=2', '--location_id=6'])
+        result = runner.invoke(cli, ['trip', 'remove-location'],input='2\n6\n')
         assert result.exit_code == 0
         assert "Trip(id=2, name=Europe trip, year=2022, locations=[3])\n" in result.output
 

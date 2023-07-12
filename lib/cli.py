@@ -18,6 +18,10 @@ def reset():
 
 cli.add_command(reset)
 
+def print_helper(table):
+    return "\nExisting records:\n"+get_all_from_db_as_string(table)+"\n\n"
+
+
 """ * 
     * user command group
     * all commands applied to the User class
@@ -29,16 +33,13 @@ def user_group():
     pass 
 
 @click.command(name='add')
-@click.option('--name', prompt='User\'s name',type=str)
+@click.option('--name', prompt=print_helper('users')+'User\'s name',type=str)
 def add_user(name):
     '''Creates a new user'''
     add_to_db('users', {'name': name})
 
-def print_helper(table):
-    return "\n"+get_all_from_db_as_string(table)+"\n\n"
-
 @click.command(name='update')
-@click.option('--user_id', prompt=print_helper('users')+"User's id", type=str)
+@click.option('--user_id', prompt=print_helper('users')+"User's id", type=int)
 @click.option('--name', prompt='Updated name', type=str)
 def update_user(user_id, name):
     '''Updates the user's name with name'''
@@ -49,30 +50,25 @@ def get_all_users():
     '''Gets all users'''
     get_all_from_db('users')
 
-def print_users_trips(ctx, param, value):
-    if not value or ctx.resilient_parsing:
-        return
-    unjoined = get_joined_and_unjoined_from_db('user_trips', value)
-    if not unjoined: 
-        ctx.exit()
 
 @click.command(name='add-trip')
-@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=int, callback=print_users_trips)
-@click.option('--trip_id', prompt='Trips\'s id', type=int)
-def add_user_trip(user_id, trip_id):
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=int)
+def add_user_trip(user_id):
     """Adds a trip to a user's trips"""
+    get_joined_and_unjoined_from_db('user_trips', user_id)
+    trip_id = click.prompt('Trip\'s id', type=int)
     add_join_to_db('user_trips', user_id, trip_id)
 
-
 @click.command(name='remove-trip')
-@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=str)
-@click.option('--trip_id', prompt=print_helper('trips')+'Trips\'s id', type=str)
-def remove_user_trip(user_id, trip_id):
+@click.option('--user_id', prompt=print_helper('users')+'User\'s id', type=int)
+def remove_user_trip(user_id):
     """Removes a trip from a user's trips"""
+    get_joined_and_unjoined_from_db('user_trips', user_id)
+    trip_id = click.prompt('Trip\'s id', type=int)
     remove_join_from_db('user_trips', user_id, trip_id)
 
 @click.command(name='get-trips')
-@click.option('--user_id', prompt=print_helper('users')+"User's id", type=str)
+@click.option('--user_id', prompt=print_helper('users')+"User's id", type=int)
 def get_user_trips(user_id):
     """Gets the trips belonging to a user"""
     get_attribute_from_db('users', user_id, 'trips')
@@ -96,7 +92,7 @@ def location_group():
     pass 
 
 @click.command(name='add')
-@click.option('--city', prompt='City', type=str)
+@click.option('--city', prompt=print_helper('locations')+'City', type=str)
 @click.option('--country', prompt='Country',type=str)
 def add_location(city, country):
     '''Creates a new location'''
@@ -108,7 +104,7 @@ def get_all_locations():
     get_all_from_db('locations')
 
 @click.command(name='remove')
-@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
+@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=int)
 def remove_location(location_id):
     '''Removes a location'''
     remove_from_db('locations', location_id)    
@@ -130,7 +126,7 @@ def trip_group():
     pass
 
 @click.command(name='add')
-@click.option('--name', prompt='Trip Name', type=str)
+@click.option('--name', prompt=print_helper('trips')+'Trip Name', type=str)
 @click.option('--year', prompt='Year', type=int)
 def add_trip(name, year):
     '''Creates a new trip'''
@@ -141,28 +137,31 @@ def get_all_trips():
     '''Gets all trips'''
     get_all_from_db('trips')
 
+
 @click.command(name='add-location')
-@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
-@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
-def add_trip_location(trip_id, location_id):
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=int)
+def add_trip_location(trip_id):
     """Adds a location to a trip"""
+    get_joined_and_unjoined_from_db('trip_locations', trip_id)
+    location_id = click.prompt('Location\'s id', type=int)
     add_join_to_db('trip_locations', trip_id, location_id)
 
 @click.command(name='remove-location')
-@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
-@click.option('--location_id', prompt=print_helper('locations')+'Location\'s id', type=str)
-def remove_trip_location(trip_id, location_id):
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=int)
+def remove_trip_location(trip_id):
     """Removes a location from a trip"""
+    get_joined_and_unjoined_from_db('trip_locations', trip_id)
+    location_id = click.prompt('Location\'s id', type=int)
     remove_join_from_db('trip_locations', trip_id, location_id)    
 
 @click.command(name='remove')
-@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+'Trip\'s id', type=int)
 def remove_trip(trip_id):
     '''Removes a trip'''
     remove_from_db('trips', trip_id)      
 
 @click.command(name='get-locations')
-@click.option('--trip_id', prompt=print_helper('trips')+"Trip's id", type=str)
+@click.option('--trip_id', prompt=print_helper('trips')+"Trip's id", type=int)
 def get_trip_locations(trip_id):
     """Gets the locations belonging to a trip"""
     get_attribute_from_db('trips', trip_id, 'locations')    

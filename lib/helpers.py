@@ -25,19 +25,19 @@ def add_to_db(table, data):
     added = session.query(db_class).filter_by(**data).first()
     print('\nAdded:\n')
     print(added)
-    print('\n')
+    print('')
 
 def get_joined_and_unjoined_from_db(table, id):
     db_class = class_lookup[table]
     all_data = session.query(db_class[1]).all()
     joined_data = session.query(db_class[1]).join(db_class[3]).join(db_class[0]).filter(db_class[0].id==id).all()
     unjoined_data = [d for d in all_data if d not in joined_data] 
-    print('\nExisting:')
+    print('\nAlready joined:')
     if not joined_data:
         print('None')
     else:
         [print(r) for r in joined_data]
-    print('\nAll available:')
+    print('\nNot yet joined:')
     if not unjoined_data:
         print('None')
     else:
@@ -54,14 +54,14 @@ def update_in_db(table, id, data):
     updated = session.get(db_class, id)
     print('\nUpdated:\n')
     print(updated)
-    print('\n')
+    print('')
 
 def get_all_from_db(table):
     db_class = class_lookup[table]
     print(f'\nAll {table}:')
     print('-------------')
     [print(r) for r in session.query(db_class).all()]
-    print('\n')
+    print('')
 
 def get_all_from_db_as_string(table):
     db_class = class_lookup[table]
@@ -76,7 +76,7 @@ def get_attribute_from_db(table, id, attr):
     print('-------------')
     for i in attribute:
         print(i)
-    print('\n')
+    print('')
 
 def remove_from_db(table, id):
     db_class = class_lookup[table]
@@ -84,10 +84,9 @@ def remove_from_db(table, id):
     session.commit()
     print(f'\nRemoved id={id}, updated list:\n')
     [print(r) for r in session.query(db_class).all()]
-    print('\n')
+    print('')
 
 def add_join_to_db(table, id1, id2):
-    print(id1, id2)
     db_class = class_lookup[table]
     record1 = session.get(db_class[0], id1)
     record2 = session.get(db_class[1], id2)
@@ -98,7 +97,7 @@ def add_join_to_db(table, id1, id2):
         print(f'\nAdded to {table}')
         print(record1)
         [print(a) for a in attribute]
-        print('\n')
+        print('')
     else:
         print('\nAlready exists\n')
 
@@ -113,6 +112,6 @@ def remove_join_from_db(table, id1, id2):
         print(f'\nRemoved from {table}')
         print(record1)
         [print(a) for a in attribute]
-        print('\n')
+        print('')
     else:
         print('\nDid not exist\n')
